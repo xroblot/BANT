@@ -36,7 +36,7 @@ jobs:
         run: pip install leanblueprint
 
       - name: Compile blueprint
-        run: cd blueprint/src && plastex -c plastex.cfg web.tex
+        run: mkdir -p blueprint/web && cd blueprint/src && plastex -c plastex.cfg web.tex
 
       - name: Upload pages artifact
         uses: actions/upload-pages-artifact@v3
