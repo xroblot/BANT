@@ -1,0 +1,178 @@
+% ── Number Fields: Basic definitions and properties ──────────────────
+% Covers Mathlib/NumberTheory/NumberField/Basic.lean
+
+\begin{definition}[Number field]
+  \label{def:number-field}
+  \lean{NumberField}
+  \leanok
+  A field $K$ is a \emph{number field} if $[K : \QQ] < \infty$, i.e., $K$
+  is a finite extension of $\QQ$.
+\end{definition}
+
+\begin{proposition}
+  \label{prop:number-field-algebraic}
+  \lean{NumberField.isAlgebraic}
+  \uses{def:number-field}
+  \leanok
+  Every number field is algebraic over $\QQ$.
+\end{proposition}
+\begin{proof}
+  \leanok
+  Every element of a finite extension satisfies the characteristic polynomial
+  of its multiplication map, which has coefficients in $\QQ$.
+\end{proof}
+
+\begin{proposition}
+  \label{prop:finite-ext-number-field}
+  \lean{NumberField.of_module_finite}
+  \uses{def:number-field}
+  \leanok
+  Let $K$ be a number field and $L/K$ a finite extension. Then $L$ is a
+  number field.
+\end{proposition}
+\begin{proof}
+  \leanok
+  By the tower law, $[L : \QQ] = [L : K][K : \QQ] < \infty$.
+\end{proof}
+
+\begin{corollary}
+  \label{cor:intermediate-field-number-field}
+  \lean{NumberField.of_intermediateField}
+  \uses{prop:finite-ext-number-field}
+  \leanok
+  Any intermediate field of a finite extension of number fields is a number
+  field.
+\end{corollary}
+
+\begin{corollary}
+  \label{cor:subfield-number-field}
+  \lean{NumberField.of_subfield}
+  \uses{def:number-field}
+  \leanok
+  Any subfield of a number field is a number field.
+\end{corollary}
+
+\begin{corollary}
+  \label{cor:tower-number-field}
+  \lean{NumberField.of_tower}
+  \uses{prop:finite-ext-number-field}
+  \leanok
+  Let $K \subset E \subset L$ be a tower of fields with $K$ and $L$ number
+  fields and $[L:K] < \infty$. Then $E$ is a number field.
+\end{corollary}
+
+\begin{definition}[Ring of integers]
+  \label{def:ring-of-integers}
+  \lean{NumberField.RingOfIntegers}
+  \uses{def:number-field}
+  \leanok
+  The \emph{ring of integers} of a number field $K$ is
+  \[
+    \cO_K \;\coloneqq\; \{ x \in K \mid x \text{ is integral over } \ZZ \},
+  \]
+  i.e., the integral closure of $\ZZ$ in $K$. It is a commutative domain.
+\end{definition}
+
+\begin{remark}
+  The inclusion $\cO_K \hookrightarrow K$ is the canonical map; elements of
+  $\cO_K$ are sometimes called \emph{algebraic integers} of $K$.
+  Note that $\ZZ = \cO_\QQ$ (see \cref{prop:ring-of-integers-rat}).
+\end{remark}
+
+\begin{proposition}
+  \label{prop:ring-of-integers-not-field}
+  \lean{NumberField.RingOfIntegers.not_isField}
+  \uses{def:ring-of-integers}
+  \leanok
+  $\cO_K$ is not a field.
+\end{proposition}
+\begin{proof}
+  \leanok
+  The ring $\ZZ$ embeds into $\cO_K$ and is not a field. Since $\cO_K$ is
+  an integral extension of $\ZZ$, if $\cO_K$ were a field then $\ZZ$ would
+  be a field, a contradiction.
+\end{proof}
+
+\begin{theorem}
+  \label{thm:ring-of-integers-dedekind}
+  \lean{NumberField.RingOfIntegers.instIsDedekindDomain}
+  \uses{def:ring-of-integers}
+  \leanok
+  $\cO_K$ is a Dedekind domain.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Since $\ZZ$ is a Dedekind domain with fraction field $\QQ$, and $K/\QQ$
+  is a finite extension, the integral closure $\cO_K$ of $\ZZ$ in $K$ is
+  Dedekind by the general theorem on integral closures in finite extensions
+  of Dedekind domains. Concretely, $\cO_K$ is Noetherian (it is a finitely
+  generated $\ZZ$-module), integrally closed by construction, and has Krull
+  dimension one (every nonzero prime is maximal, inherited from $\ZZ$ via
+  the going-up and incomparability theorems for integral extensions).
+\end{proof}
+
+\begin{theorem}
+  \label{thm:ring-of-integers-free}
+  \lean{NumberField.RingOfIntegers.instFree}
+  \uses{def:ring-of-integers}
+  \leanok
+  $\cO_K$ is a free $\ZZ$-module of rank $[K : \QQ]$.
+\end{theorem}
+\begin{proof}
+  \leanok
+  $\cO_K$ is a finitely generated $\ZZ$-module (it is Noetherian) and is
+  torsion-free (it embeds into $K$, which is torsion-free over $\ZZ$). By
+  the structure theorem for finitely generated modules over a PID, $\cO_K$
+  is free. Its rank equals $[K:\QQ]$ because $\cO_K \otimes_\ZZ \QQ \cong K$
+  as $\QQ$-vector spaces.
+\end{proof}
+
+\begin{definition}[Integral basis]
+  \label{def:integral-basis}
+  \lean{NumberField.integralBasis}
+  \uses{def:ring-of-integers, thm:ring-of-integers-free}
+  \leanok
+  An \emph{integral basis} of $K$ is a $\QQ$-basis $(\omega_1, \ldots, \omega_n)$
+  of $K$ with $\omega_i \in \cO_K$ for all $i$, which simultaneously forms
+  a $\ZZ$-basis of $\cO_K$.
+\end{definition}
+
+\begin{theorem}
+  \label{thm:rank-ring-of-integers}
+  \lean{NumberField.RingOfIntegers.rank}
+  \uses{def:ring-of-integers}
+  \leanok
+  $\mathrm{rank}_\ZZ(\cO_K) = [K : \QQ]$.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Immediate from \cref{thm:ring-of-integers-free}: the rank of $\cO_K$ over
+  $\ZZ$ equals the dimension of $\cO_K \otimes_\ZZ \QQ \cong K$ over $\QQ$.
+\end{proof}
+
+\begin{proposition}
+  \label{prop:ring-of-integers-rat}
+  \lean{Rat.ringOfIntegersEquiv}
+  \uses{def:ring-of-integers}
+  \leanok
+  $\cO_\QQ \cong \ZZ$ as rings. In particular, $\QQ$ is a number field.
+\end{proposition}
+\begin{proof}
+  \leanok
+  By definition $\cO_\QQ$ is the integral closure of $\ZZ$ in $\QQ$. Since
+  $\ZZ$ is integrally closed in its fraction field, $\cO_\QQ = \ZZ$.
+\end{proof}
+
+\begin{proposition}
+  \label{prop:adjoin-root-number-field}
+  \lean{AdjoinRoot.instNumberField}
+  \uses{def:number-field}
+  \leanok
+  Let $f \in \QQ[X]$ be irreducible. Then $\QQ[X]/(f)$ is a number field
+  of degree $\deg f$ over $\QQ$.
+\end{proposition}
+\begin{proof}
+  \leanok
+  Since $f$ is irreducible, $(f)$ is maximal in $\QQ[X]$, so $\QQ[X]/(f)$
+  is a field containing $\QQ$. Its degree over $\QQ$ is $\deg f < \infty$.
+\end{proof}
