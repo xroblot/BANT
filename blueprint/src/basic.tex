@@ -113,7 +113,7 @@
 
 \begin{theorem}
   \label{thm:ring-of-integers-free}
-  \lean{NumberField.RingOfIntegers.instFree}
+  \lean{NumberField.RingOfIntegers.instFreeInt}
   \uses{def:ring-of-integers}
   \leanok
   $\cO_K$ is a free $\ZZ$-module of rank $[K : \QQ]$.
@@ -165,7 +165,7 @@
 
 \begin{proposition}
   \label{prop:adjoin-root-number-field}
-  \lean{AdjoinRoot.instNumberField}
+  \lean{AdjoinRoot.instNumberFieldRat}
   \uses{def:number-field}
   \leanok
   Let $f \in \QQ[X]$ be irreducible. Then $\QQ[X]/(f)$ is a number field
