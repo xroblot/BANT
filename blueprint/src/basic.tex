@@ -123,7 +123,7 @@
   $\cO_K$ is a finitely generated $\ZZ$-module (it is Noetherian) and is
   torsion-free (it embeds into $K$, which is torsion-free over $\ZZ$). By
   the structure theorem for finitely generated modules over a PID, $\cO_K$
-  is free. Its rank equals $[K:\QQ]$ because $\cO_K \otimes_\ZZ \QQ \cong K$
+  is free. Its rank equals $[K:\QQ]$ because $\cO_K \otimes_{\ZZ} \QQ \cong K$
   as $\QQ$-vector spaces.
 \end{proof}
 
@@ -142,12 +142,12 @@
   \lean{NumberField.RingOfIntegers.rank}
   \uses{def:ring-of-integers}
   \leanok
-  $\mathrm{rank}_\ZZ(\cO_K) = [K : \QQ]$.
+  $\mathrm{rank}_{\ZZ}(\cO_K) = [K : \QQ]$.
 \end{theorem}
 \begin{proof}
   \leanok
   Immediate from \cref{thm:ring-of-integers-free}: the rank of $\cO_K$ over
-  $\ZZ$ equals the dimension of $\cO_K \otimes_\ZZ \QQ \cong K$ over $\QQ$.
+  $\ZZ$ equals the dimension of $\cO_K \otimes_{\ZZ} \QQ \cong K$ over $\QQ$.
 \end{proof}
 
 \begin{proposition}
