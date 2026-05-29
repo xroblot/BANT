@@ -1,0 +1,23 @@
+name = "BANT"
+version = "0.1.0"
+defaultTargets = ["BANT"]
+
+[[lean_lib]]
+name = "BANT"
+
+[[require]]
+name = "checkdecls"
+git = "https://github.com/PatrickMassot/checkdecls.git"
+
+[[require]]
+name = "«doc-gen4»"
+git = "https://github.com/leanprover/doc-gen4"
+rev = "main"
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4"
+rev = "master"
+
+[blueprint]
+lean_doc_url = "https://leanprover-community.github.io/mathlib4_docs/"

@@ -1,4 +1,4 @@
-name: Compile blueprint
+name: Compile blueprint and documentation
 
 on:
   push:
@@ -16,7 +16,7 @@ permissions:
   id-token: write
 
 jobs:
-  build_blueprint:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout project
@@ -24,32 +24,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Build project
+        id: build-lean
+        uses: leanprover/lean-action@f807b338d95de7813c5c50d018f1c23c9b93b4ec # v1.2.0
+
+      - name: Build documentation and blueprint
+        uses: leanprover-community/docgen-action@main
         with:
-          python-version: '3.13'
-
-      - name: Install system dependencies
-        run: sudo apt-get install -y graphviz libgraphviz-dev
-
-      - name: Install leanblueprint
-        run: pip install leanblueprint
-
-      - name: Compile blueprint
-        run: mkdir -p blueprint/web && cd blueprint/src && plastex -c plastex.cfg web.tex
-
-      - name: Upload pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: blueprint/web
-
-  deploy:
-    needs: build_blueprint
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          blueprint: true
+          api-docs: false
